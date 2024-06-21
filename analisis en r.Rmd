@@ -1,0 +1,86 @@
+---
+title: 'Metodología de Evaluación de la Propuesta Ambiental: Deforestación en las
+  Regiones Oriental y Occidental'
+author: "null"
+date: "2024-06-18"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r cars}
+# Configurar un espejo CRAN
+options(repos = c(CRAN = "https://cran.r-project.org"))
+
+# Instalar y cargar el paquete FinCal si no está instalado
+if(!require(FinCal)) install.packages("FinCal", dependencies=TRUE)
+library(FinCal)
+
+# Definir los parámetros
+tasa_descuento <- 0.05
+periodo_evaluacion <- 20
+costo_inicial <- 7000000000
+beneficios_anuales <- 1050000000
+
+# Calcular el VAN
+van <- -costo_inicial + sum(beneficios_anuales / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+van
+
+# Definir los parámetros para la agricultura
+ingresos_agricultura_anuales <- 1200000000
+
+# Calcular el VAN de la agricultura (costo de oportunidad)
+van_agricultura <- sum(ingresos_agricultura_anuales / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+costo_oportunidad <- van_agricultura - van
+costo_oportunidad
+
+# Definir los flujos de caja
+flujos_caja <- c(-costo_inicial, rep(beneficios_anuales, periodo_evaluacion))
+# Definir los flujos de caja
+flujos_caja <- c(-7000000000, rep(1050000000, 20))
+
+# Calcular la TIR
+tir <- irr(flujos_caja)
+tir
+# Definir el impacto negativo de la deforestación en las comunidades locales
+impacto_negativo_deforestacion <- 500000000
+
+# Calcular los beneficios netos de la conservación
+beneficios_netos_conservacion <- sum((beneficios_anuales - impacto_negativo_deforestacion) / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+beneficios_netos_conservacion
+
+# Definir los parámetros
+tasa_descuento <- 0.05
+periodo_evaluacion <- 20
+costo_inicial <- 7000000000
+beneficios_anuales <- 1050000000
+ingresos_agricultura_anuales <- 1200000000
+impacto_negativo_deforestacion <- 500000000
+
+# Calcular el VAN
+van <- -costo_inicial + sum(beneficios_anuales / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+print(paste("VAN de la conservación: ", van))
+
+# Calcular el costo de oportunidad
+van_agricultura <- sum(ingresos_agricultura_anuales / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+costo_oportunidad <- van_agricultura - van
+print(paste("Costo de oportunidad: ", costo_oportunidad))
+
+# Calcular la TIR
+flujos_caja <- c(-costo_inicial, rep(beneficios_anuales, periodo_evaluacion))
+tir <- irr(flujos_caja)
+print(paste("TIR de la conservación: ", tir))
+
+# Calcular los beneficios netos de la conservación considerando el impacto negativo de la deforestación
+beneficios_netos_conservacion <- sum((beneficios_anuales - impacto_negativo_deforestacion) / ((1 + tasa_descuento) ^ (1:periodo_evaluacion)))
+print(paste("Beneficios netos de la conservación: ", beneficios_netos_conservacion))
+
+```
+
+
